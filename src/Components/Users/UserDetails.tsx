@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { UserSimple } from '../../Models/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { User } from '../../Models/User';
@@ -12,9 +12,9 @@ export interface UserCardProps {
 export function UserDetails() {
 	const [user, setUser] = useState<User | undefined>(undefined);
 	const [loading, setLoading] = useState(false);
-  
-  const route = useRoute<any>();
-  const { id } = route.params;
+
+	const route = useRoute<any>();
+	const { id } = route.params;
 
 	useEffect(() => {
 		setLoading(true);
@@ -26,22 +26,27 @@ export function UserDetails() {
 			});
 	}, []);
 
-	return user ? (
+	return (
 		<View style={styles.wrapper}>
-			<View style={styles.userPhoto}>
-				<MaterialCommunityIcons
-					name='face-man-profile'
-					color={'#e91e63'}
-					size={200}
-				/>
-			</View>
-			<View style={styles.userBasicData}>
-				<Text style={styles.name}>{user.name}</Text>
-				<Text style={styles.username}>@{user.username}</Text>
-			</View>
+			{user ? (
+				<>
+					<View style={styles.userPhoto}>
+						<MaterialCommunityIcons
+							name='face-man-profile'
+							color={'#e91e63'}
+							size={200}
+						/>
+					</View>
+					<Button title='Add user'></Button>
+					<View style={styles.userBasicData}>
+						<Text style={styles.name}>{user.name}</Text>
+						<Text style={styles.username}>@{user.username}</Text>
+					</View>
+				</>
+			) : (
+				<Text>Loading...</Text>
+			)}
 		</View>
-	) : (
-		<Text>Loading...</Text>
 	);
 }
 
@@ -70,10 +75,10 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 	},
 	name: {
-		fontSize: 20,
+		fontSize: 18,
 	},
 	username: {
 		fontWeight: '200',
-		fontSize: 20,
+		fontSize: 15,
 	},
 });

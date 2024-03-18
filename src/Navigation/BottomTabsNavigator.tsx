@@ -7,7 +7,8 @@ import { Profile } from '../Pages/Profile';
 
 export function BottomTabsNavigator() {
 	const Tab = createBottomTabNavigator();
-	return (
+	
+  return (
 		<Tab.Navigator
 			initialRouteName='Feed'
 			screenOptions={{
@@ -21,7 +22,7 @@ export function BottomTabsNavigator() {
 				options={{
 					tabBarLabel: 'Users',
 					tabBarIcon: ({ color, size }) => (
-						<MaterialCommunityIcons name='home' color={color} size={size} />
+						<MaterialCommunityIcons name='account-multiple' color={color} size={size} />
 					),
 				}}
 			/>

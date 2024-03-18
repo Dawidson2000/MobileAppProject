@@ -7,9 +7,21 @@ const UsersStack = createNativeStackNavigator();
 
 export function Users() {
 	return (
-		<UsersStack.Navigator>
-			<UsersStack.Screen name='UsersList' component={UsersList} />
-			<UsersStack.Screen name='UserDetails' component={UserDetails} />
+		<UsersStack.Navigator
+			screenOptions={{
+				headerTintColor: '#e91e63',
+			}}
+		>
+			<UsersStack.Screen
+				name='UsersList'
+				options={{ title: 'Users list' }}
+				component={UsersList}
+			/>
+			<UsersStack.Screen
+				name='UserDetails'
+				options={{ title: 'User details' }}
+				component={UserDetails}
+			/>
 		</UsersStack.Navigator>
 	);
 }

@@ -1,8 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
+import {
+	View,
+	Text,
+	StyleSheet,
+	TouchableHighlight,
+	Button,
+} from 'react-native';
 import { UserSimple } from '../../Models/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { IconButton } from '../UI/IconButton';
 
 export interface UserCardProps {
 	user: UserSimple;
@@ -15,6 +22,7 @@ export function UserCard(props: UserCardProps) {
 	return (
 		<TouchableHighlight
 			onPress={() => navigation.navigate('UserDetails', { id: user.id })}
+			style={styles.touchable}
 		>
 			<View style={styles.wrapper}>
 				<View style={styles.userPhoto}>
@@ -27,6 +35,9 @@ export function UserCard(props: UserCardProps) {
 				<View>
 					<Text>{user.name}</Text>
 					<Text style={styles.username}>@{user.username}</Text>
+				</View>
+				<View style={styles.buttons}>
+					<IconButton iconName='plus' onPress={() => {}} />
 				</View>
 			</View>
 		</TouchableHighlight>
@@ -55,5 +66,12 @@ const styles = StyleSheet.create({
 		height: 50,
 		width: 50,
 		borderRadius: 10,
+	},
+	touchable: {
+		borderRadius: 10,
+	},
+	buttons: {
+		marginLeft: 'auto',
+    paddingRight: 15,
 	},
 });
