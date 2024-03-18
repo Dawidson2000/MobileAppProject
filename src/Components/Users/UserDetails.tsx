@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { UserSimple } from '../../Models/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { User } from '../../Models/User';
 import { useRoute } from '@react-navigation/native';
-
+import { Button } from '../UI/Button';
+import { COLOR } from '../../Styles/colors';
 export interface UserCardProps {
 	user: UserSimple;
 }
@@ -33,11 +34,11 @@ export function UserDetails() {
 					<View style={styles.userPhoto}>
 						<MaterialCommunityIcons
 							name='face-man-profile'
-							color={'#e91e63'}
+							color={COLOR.mainAccent}
 							size={200}
 						/>
 					</View>
-					<Button title='Add user'></Button>
+					<Button title='Add user' style={styles.button} onPress={() => {}} />
 					<View style={styles.userBasicData}>
 						<Text style={styles.name}>{user.name}</Text>
 						<Text style={styles.username}>@{user.username}</Text>
@@ -80,5 +81,8 @@ const styles = StyleSheet.create({
 	username: {
 		fontWeight: '200',
 		fontSize: 15,
+	},
+	button: {
+		width: '100%',
 	},
 });

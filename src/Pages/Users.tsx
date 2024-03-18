@@ -2,6 +2,7 @@ import { UserDetails } from '../Components/Users/UserDetails';
 import { UsersList } from '../Components/Users/UsersList';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { COLOR } from '../Styles/colors';
 
 const UsersStack = createNativeStackNavigator();
 
@@ -9,7 +10,7 @@ export function Users() {
 	return (
 		<UsersStack.Navigator
 			screenOptions={{
-				headerTintColor: '#e91e63',
+				headerTintColor: COLOR.mainAccent,
 			}}
 		>
 			<UsersStack.Screen

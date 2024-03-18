@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Users } from '../Pages/Users';
 import { Profile } from '../Pages/Profile';
+import { COLOR } from '../Styles/colors';
 
 export function BottomTabsNavigator() {
 	const Tab = createBottomTabNavigator();
@@ -12,7 +13,7 @@ export function BottomTabsNavigator() {
 		<Tab.Navigator
 			initialRouteName='Feed'
 			screenOptions={{
-				tabBarActiveTintColor: '#e91e63',
+				tabBarActiveTintColor: COLOR.mainAccent,
 				headerShown: false,
 			}}
 		>

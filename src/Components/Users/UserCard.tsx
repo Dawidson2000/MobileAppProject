@@ -10,6 +10,7 @@ import { UserSimple } from '../../Models/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { IconButton } from '../UI/IconButton';
+import { COLOR } from '../../Styles/colors';
 
 export interface UserCardProps {
 	user: UserSimple;
@@ -28,7 +29,7 @@ export function UserCard(props: UserCardProps) {
 				<View style={styles.userPhoto}>
 					<MaterialCommunityIcons
 						name='face-man-profile'
-						color={'#e91e63'}
+						color={COLOR.mainAccent}
 						size={30}
 					/>
 				</View>

@@ -5,6 +5,7 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { COLOR } from '../../Styles/colors';
 
 export interface IconButtonProps {
 	iconName: 'plus';
@@ -16,7 +17,11 @@ export function IconButton(props: IconButtonProps) {
 
 	return (
 		<TouchableOpacity onPress={onPress}>
-			<MaterialCommunityIcons name={iconName} color={'#e91e63'} size={25} />
+			<MaterialCommunityIcons
+				name={iconName}
+				color={COLOR.mainAccent}
+				size={25}
+			/>
 		</TouchableOpacity>
 	);
 }
