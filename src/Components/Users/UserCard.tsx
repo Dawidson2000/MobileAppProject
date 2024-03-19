@@ -4,9 +4,8 @@ import {
 	Text,
 	StyleSheet,
 	TouchableHighlight,
-	Button,
 } from 'react-native';
-import { UserSimple } from '../../Models/UserSimple';
+import { UserSimple } from '../../Models/Users/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { IconButton } from '../UI/IconButton';

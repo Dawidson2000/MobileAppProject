@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { UserCard } from './UserCard';
-import { UserSimple } from '../../Models/UserSimple';
+import { UserSimple } from '../../Models/Users/UserSimple';
 import { COLOR } from '../../Styles/colors';
 
 export function UsersList() {

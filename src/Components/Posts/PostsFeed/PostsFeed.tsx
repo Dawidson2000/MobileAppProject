@@ -7,42 +7,47 @@ import {
 	StyleSheet,
 	ActivityIndicator,
 } from 'react-native';
-import { Post } from '../Post';
+import { PostCard } from './PostCard';
 import { Footer } from './Footer';
+import { Post } from '../../../Models/Posts/Post';
 
 export function PostsFeed() {
 	const [loading, setLoading] = useState(false);
-	const [posts, setPosts] = useState<any[]>([]);
+	const [posts, setPosts] = useState<Post[]>([]);
 	const [page, setPage] = useState(1);
 	const [isEnd, setIsEnd] = useState(false);
 
-	const isFocused = useIsFocused();
+	// const isFocused = useIsFocused();
 
 	useEffect(() => {
-		if (isFocused && !isEnd) {
+		if (!isEnd) { //isFoci=used
 			setLoading(true);
 			fetch(
-				`https://jsonplaceholder.typicode.com/posts?_page=${page}&_per_page=10`
+				`https://jsonplaceholder.typicode.com/posts?_page=${page}&_per_page=10&_embed=comments`
 			)
 				.then((response) => response.json())
 				.then((data) => {
-					if (data.length < 10) {
+					const posts: Post[] = data.map(
+						(item: any) =>
+							({ ...item, numberOfComments: item.comments.length } as Post)
+					);
+					if (posts.length < 10) {
 						setIsEnd(true);
 					}
-					setPosts((prevPosts) => [...prevPosts, ...data]);
+					setPosts((prevPosts) => [...prevPosts, ...posts]);
 					setLoading(false);
 				});
 		}
-	}, [isFocused, page]);
+	}, [page]); //isFocused
 
-	useEffect(() => {
-		if (!isFocused) {
-			setPosts([]);
-			setIsEnd(false);
-			setLoading(false);
-			setPage(1);
-		}
-	}, [isFocused]);
+	// useEffect(() => {
+	// 	if (!isFocused) {
+	// 		setPosts([]);
+	// 		setIsEnd(false);
+	// 		setLoading(false);
+	// 		setPage(1);
+	// 	}
+	// }, [isFocused]);
 
 	return (
 		<View style={styles.wrapper}>
@@ -51,7 +56,7 @@ export function PostsFeed() {
 			) : (
 				<FlatList
 					data={posts}
-					renderItem={({ item }) => <Post post={item} />}
+					renderItem={({ item }) => <PostCard post={item} />}
 					keyExtractor={(item) => item.id.toString()}
 					onEndReachedThreshold={0.2}
 					onEndReached={() => {

@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { UserSimple } from '../../Models/UserSimple';
+import { UserSimple } from '../../Models/Users/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { User } from '../../Models/User';
+import { User } from '../../Models/Users/User';
 import { useRoute } from '@react-navigation/native';
 import { Button } from '../UI/Button';
 import { COLOR } from '../../Styles/colors';
-export interface UserCardProps {
-	user: UserSimple;
-}
 
 export function UserDetails() {
 	const [user, setUser] = useState<User | undefined>(undefined);
