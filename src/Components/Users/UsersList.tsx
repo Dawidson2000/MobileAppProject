@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { UserCard } from './UserCard';
 import { UserSimple } from '../../Models/UserSimple';
+import { COLOR } from '../../Styles/colors';
 
 export function UsersList() {
 	const [users, setUsers] = useState<UserSimple[]>([]);
@@ -20,7 +21,7 @@ export function UsersList() {
 	return (
 		<View style={styles.wrapper}>
 			{loading ? (
-				<Text>Loading...</Text>
+				<ActivityIndicator color={COLOR.mainAccent} />
 			) : (
 				<FlatList
 					data={users}

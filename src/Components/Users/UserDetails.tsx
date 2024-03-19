@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { UserSimple } from '../../Models/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { User } from '../../Models/User';
@@ -29,7 +29,7 @@ export function UserDetails() {
 
 	return (
 		<View style={styles.wrapper}>
-			{user ? (
+			{user && !loading ? (
 				<>
 					<View style={styles.userPhoto}>
 						<MaterialCommunityIcons
@@ -45,7 +45,7 @@ export function UserDetails() {
 					</View>
 				</>
 			) : (
-				<Text>Loading...</Text>
+				<ActivityIndicator color={COLOR.mainAccent} />
 			)}
 		</View>
 	);

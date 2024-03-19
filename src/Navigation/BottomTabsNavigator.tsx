@@ -3,7 +3,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Users } from '../Pages/Users';
-import { Profile } from '../Pages/Profile';
+import { Posts } from '../Pages/Posts';
 import { COLOR } from '../Styles/colors';
 
 export function BottomTabsNavigator() {
@@ -28,13 +28,14 @@ export function BottomTabsNavigator() {
 				}}
 			/>
 			<Tab.Screen
-				name='Profile'
-				component={Profile}
+				name='Posts'
+				component={Posts}
 				options={{
-					tabBarLabel: 'Profile',
+					tabBarLabel: 'Posts',
 					tabBarIcon: ({ color, size }) => (
-						<MaterialCommunityIcons name='bell' color={color} size={size} />
+						<MaterialCommunityIcons name='post' color={color} size={size} />
 					),
+          headerShown: true,
 				}}
 			/>
 		</Tab.Navigator>
