@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
+import {
+	View,
+	StyleSheet,
+	ActivityIndicator,
+	FlatList,
+	TextInput,
+} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { CommentContainer } from './CommentContainer';
 import { Comment } from '../../../Models/Posts/Comment';
@@ -27,13 +33,16 @@ export function CommentsSection() {
 			{loading ? (
 				<ActivityIndicator color={COLOR.mainAccent} />
 			) : (
-				<FlatList
-					data={comments}
-					renderItem={({ item }) => <CommentContainer comment={item} />}
-					keyExtractor={(item) => item.id.toString()}
-					contentContainerStyle={styles.listContent}
-					style={styles.list}
-				/>
+				<>
+					<FlatList
+						data={comments}
+						renderItem={({ item }) => <CommentContainer comment={item} />}
+						keyExtractor={(item) => item.id.toString()}
+						contentContainerStyle={styles.listContent}
+						style={styles.list}
+					/>
+					<TextInput style={styles.input} placeholder='Type comment' />
+				</>
 			)}
 		</View>
 	);
@@ -51,5 +60,12 @@ const styles = StyleSheet.create({
 	},
 	list: {
 		width: '100%',
+	},
+	input: {
+		backgroundColor: '#fff',
+		width: '100%',
+		padding: 10,
+		borderRadius: 10,
+		marginTop: 10,
 	},
 });

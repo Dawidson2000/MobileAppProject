@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { COLOR } from '../../Styles/colors';
-import { PostCard } from './PostsFeed/PostCard';
 import { CommentsSection } from './Comments/CommentsSection';
+import { PostContainer } from './PostContainer';
 
 export function PostDetails() {
 	const route = useRoute<any>();
@@ -11,12 +10,14 @@ export function PostDetails() {
 
 	return (
 		<View style={styles.wrapper}>
-			{post && (
-				<>
-					<PostCard post={post} />
-					<CommentsSection />
-				</>
-			)}
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+				{post && (
+					<>
+						<PostContainer post={post} />
+						<CommentsSection />
+					</>
+				)}
+			</TouchableWithoutFeedback>
 		</View>
 	);
 }
