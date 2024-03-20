@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLOR } from '../../Styles/colors';
 
 export interface IconButtonProps {
-	iconName: 'plus';
+	iconName: 'plus' | 'send';
 	onPress: ((event: GestureResponderEvent) => void) | undefined;
 }
 

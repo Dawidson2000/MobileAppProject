@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
 	View,
 	StyleSheet,
 	ActivityIndicator,
 	FlatList,
-	TextInput,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { CommentContainer } from './CommentContainer';
 import { Comment } from '../../../Models/Posts/Comment';
 import { COLOR } from '../../../Styles/colors';
+import { InputBar } from './InputBar';
 
 export function CommentsSection() {
 	const [comments, setComments] = useState<Comment[]>([]);
@@ -17,6 +17,8 @@ export function CommentsSection() {
 
 	const route = useRoute<any>();
 	const { post } = route.params;
+
+	const listRef = useRef<FlatList>(null);
 
 	useEffect(() => {
 		setLoading(true);
@@ -27,6 +29,21 @@ export function CommentsSection() {
 				setLoading(false);
 			});
 	}, []);
+
+	const addCommentHandler = (value: string) => {
+		const newComment: Comment = {
+			email: 'yourEmail@gmail.com',
+			body: value,
+			name: '',
+			id: comments.length + 1,
+		};
+
+		setComments((prevComments) => {
+			return [newComment, ...prevComments];
+		});
+
+		listRef.current?.scrollToIndex({ animated: true, index: 0 });
+	};
 
 	return (
 		<View style={styles.wrapper}>
@@ -40,8 +57,9 @@ export function CommentsSection() {
 						keyExtractor={(item) => item.id.toString()}
 						contentContainerStyle={styles.listContent}
 						style={styles.list}
+						ref={listRef}
 					/>
-					<TextInput style={styles.input} placeholder='Type comment' />
+					<InputBar addCommentHandler={addCommentHandler} />
 				</>
 			)}
 		</View>
