@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		marginTop: 20,
+    paddingTop: 10,
+    paddingHorizontal: 10,
 	},
 	listContent: {
 		gap: 15,
@@ -84,6 +85,5 @@ const styles = StyleSheet.create({
 		width: '100%',
 		padding: 10,
 		borderRadius: 10,
-		marginTop: 10,
 	},
 });

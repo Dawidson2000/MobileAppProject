@@ -9,21 +9,30 @@ import { COLOR } from '../../Styles/colors';
 
 export interface IconButtonProps {
 	iconName: 'plus' | 'send';
+	disabled?: boolean;
 	onPress: ((event: GestureResponderEvent) => void) | undefined;
 }
 
 export function IconButton(props: IconButtonProps) {
-	const { iconName, onPress } = props;
+	const { iconName, disabled, onPress } = props;
 
 	return (
-		<TouchableOpacity onPress={onPress}>
+		<TouchableOpacity
+			onPress={onPress}
+			disabled={disabled}
+			style={disabled && styles.disabled}
+		>
 			<MaterialCommunityIcons
 				name={iconName}
 				color={COLOR.mainAccent}
-				size={25}
+				size={30}
 			/>
 		</TouchableOpacity>
 	);
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	disabled: {
+		opacity: 0.3,
+	},
+});

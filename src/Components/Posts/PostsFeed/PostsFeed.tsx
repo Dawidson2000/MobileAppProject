@@ -17,10 +17,8 @@ export function PostsFeed() {
 	const [page, setPage] = useState(1);
 	const [isEnd, setIsEnd] = useState(false);
 
-	// const isFocused = useIsFocused();
-
 	useEffect(() => {
-		if (!isEnd) { //isFoci=used
+		if (!isEnd) {
 			setLoading(true);
 			fetch(
 				`https://jsonplaceholder.typicode.com/posts?_page=${page}&_per_page=10&_embed=comments`
@@ -34,20 +32,17 @@ export function PostsFeed() {
 					if (posts.length < 10) {
 						setIsEnd(true);
 					}
-					setPosts((prevPosts) => [...prevPosts, ...posts]);
+					setPosts((prevPosts) =>
+						page === 1 ? posts : [...prevPosts, ...posts]
+					);
 					setLoading(false);
 				});
 		}
-	}, [page]); //isFocused
+	}, [page]);
 
-	// useEffect(() => {
-	// 	if (!isFocused) {
-	// 		setPosts([]);
-	// 		setIsEnd(false);
-	// 		setLoading(false);
-	// 		setPage(1);
-	// 	}
-	// }, [isFocused]);
+	const refreshHandler = () => {
+		setPage(1);
+	};
 
 	return (
 		<View style={styles.wrapper}>
@@ -64,6 +59,8 @@ export function PostsFeed() {
 					}}
 					ListFooterComponent={<Footer loading={loading} isEnd={isEnd} />}
 					contentContainerStyle={styles.listContent}
+					refreshing={loading}
+					onRefresh={refreshHandler}
 				/>
 			)}
 		</View>
@@ -75,7 +72,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: 20,
+		paddingVertical: 20,
 		width: '100%',
 	},
 	listContent: {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Keyboard } from 'react-native';
 
 import { CustomTextInput } from '../../UI/TextInput';
 import { IconButton } from '../../UI/IconButton';
@@ -16,6 +16,7 @@ export function InputBar(props: InputBarProps) {
 	const addComment = () => {
 		addCommentHandler(text);
 		setText('');
+		Keyboard.dismiss();
 	};
 
 	return (
@@ -25,7 +26,7 @@ export function InputBar(props: InputBarProps) {
 				placeholder='Type comment'
 				onChange={(value) => setText(value)}
 			/>
-			<IconButton iconName='send' onPress={addComment} />
+			<IconButton iconName='send' onPress={addComment} disabled={!text} />
 		</View>
 	);
 }
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 10,
+		paddingTop: 15,
 		paddingHorizontal: 20,
-    paddingTop: 10,
 	},
 });

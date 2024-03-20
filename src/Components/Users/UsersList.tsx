@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: 20,
+		paddingVertical: 20,
 		width: '100%',
 	},
 	listContent: {
