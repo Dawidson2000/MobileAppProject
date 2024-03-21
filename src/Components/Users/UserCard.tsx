@@ -1,15 +1,12 @@
 import React from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	TouchableHighlight,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import { UserSimple } from '../../Models/Users/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { IconButton } from '../UI/IconButton';
 import { COLOR } from '../../Styles/colors';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../Store/Slices/usersSlice';
 
 export interface UserCardProps {
 	user: UserSimple;
@@ -18,6 +15,11 @@ export interface UserCardProps {
 export function UserCard(props: UserCardProps) {
 	const { user } = props;
 	const navigation = useNavigation<any>();
+	const dispatch = useDispatch();
+
+	const addUserHandler = () => {
+		dispatch(addUser(user));
+	};
 
 	return (
 		<TouchableHighlight
@@ -37,7 +39,7 @@ export function UserCard(props: UserCardProps) {
 					<Text style={styles.username}>@{user.username}</Text>
 				</View>
 				<View style={styles.buttons}>
-					<IconButton iconName='plus' onPress={() => {}} />
+					<IconButton iconName='plus' onPress={() => addUserHandler()} />
 				</View>
 			</View>
 		</TouchableHighlight>
@@ -72,6 +74,6 @@ const styles = StyleSheet.create({
 	},
 	buttons: {
 		marginLeft: 'auto',
-    paddingRight: 15,
+		paddingRight: 15,
 	},
 });

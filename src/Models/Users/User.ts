@@ -1,7 +1,6 @@
-export type User = {
-	id: number;
-	name: string;
-	username: string;
+import { UserSimple } from './UserSimple';
+
+export type User = UserSimple & {
 	email: string;
 	address: UserAdress;
 	phone: string;

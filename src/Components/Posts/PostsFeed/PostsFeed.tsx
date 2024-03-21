@@ -46,7 +46,7 @@ export function PostsFeed() {
 
 	return (
 		<View style={styles.wrapper}>
-			{loading && posts.length < 10 ? (
+			{loading ? (
 				<ActivityIndicator />
 			) : (
 				<FlatList

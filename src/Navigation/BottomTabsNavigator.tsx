@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Users } from '../Pages/Users';
 import { Posts } from '../Pages/Posts';
 import { COLOR } from '../Styles/colors';
+import { Tasks } from '../Pages/Tasks';
 
 export function BottomTabsNavigator() {
 	const Tab = createBottomTabNavigator();
@@ -39,6 +40,18 @@ export function BottomTabsNavigator() {
 					tabBarIcon: ({ color, size }) => (
 						<MaterialCommunityIcons name='post' color={color} size={size} />
 					),
+				}}
+			/>
+			<Tab.Screen
+				name='Tasks'
+				component={Tasks}
+				options={{
+					tabBarLabel: 'Tasks',
+					tabBarIcon: ({ color, size }) => (
+						<MaterialCommunityIcons name='list-status' color={color} size={size} />
+					),
+          headerShown: true,
+          headerTintColor: COLOR.mainAccent,
 				}}
 			/>
 		</Tab.Navigator>

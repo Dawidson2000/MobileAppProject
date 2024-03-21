@@ -6,12 +6,16 @@ import { User } from '../../Models/Users/User';
 import { useRoute } from '@react-navigation/native';
 import { Button } from '../UI/Button';
 import { COLOR } from '../../Styles/colors';
+import { addUser } from '../../Store/Slices/usersSlice';
+import { useDispatch } from 'react-redux';
 
 export function UserDetails() {
 	const [user, setUser] = useState<User | undefined>(undefined);
 	const [loading, setLoading] = useState(false);
 
 	const route = useRoute<any>();
+	const dispatch = useDispatch();
+
 	const { id } = route.params;
 
 	useEffect(() => {
@@ -24,6 +28,10 @@ export function UserDetails() {
 			});
 	}, []);
 
+	const addUserHandler = (user: UserSimple) => {
+		dispatch(addUser(user));
+	};
+
 	return (
 		<View style={styles.wrapper}>
 			{user && !loading ? (
@@ -35,7 +43,11 @@ export function UserDetails() {
 							size={200}
 						/>
 					</View>
-					<Button title='Add user' style={styles.button} onPress={() => {}} />
+					<Button
+						title='Add user'
+						style={styles.button}
+						onPress={() => addUserHandler(user)}
+					/>
 					<View style={styles.userBasicData}>
 						<Text style={styles.name}>{user.name}</Text>
 						<Text style={styles.username}>@{user.username}</Text>
