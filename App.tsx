@@ -4,6 +4,8 @@ import { BottomTabsNavigator } from './src/Navigation/BottomTabsNavigator';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import store from './src/Store/store';
+import { Provider } from 'react-redux';
 
 export default function App() {
 	return (
@@ -13,9 +15,11 @@ export default function App() {
 				style={styles.container}
 				keyboardVerticalOffset={-64}
 			>
-				<NavigationContainer>
-					<BottomTabsNavigator />
-				</NavigationContainer>
+				<Provider store={store}>
+					<NavigationContainer>
+						<BottomTabsNavigator />
+					</NavigationContainer>
+				</Provider>
 				<StatusBar style='dark' />
 			</KeyboardAvoidingView>
 		</SafeAreaView>

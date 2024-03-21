@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Keyboard } from 'react-native';
 
 import { CustomTextInput } from '../../UI/TextInput';
@@ -9,7 +9,7 @@ interface InputBarProps {
 }
 
 export function InputBar(props: InputBarProps) {
-	const { addCommentHandler } = props;
+	const { addCommentHandler } = props; 
 
 	const [text, setText] = useState('');
 
