@@ -1,8 +1,6 @@
-import { useIsFocused } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {
 	View,
-	Text,
 	FlatList,
 	StyleSheet,
 	ActivityIndicator,
@@ -11,8 +9,8 @@ import { PostCard } from './PostCard';
 import { Footer } from './Footer';
 import { Post } from '../../../Models/Posts/Post';
 
-export function PostsFeed() {
-	const [loading, setLoading] = useState(false);
+export function PostsFeed() {	
+  const [loading, setLoading] = useState(false);
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [page, setPage] = useState(1);
 	const [isEnd, setIsEnd] = useState(false);
@@ -46,7 +44,7 @@ export function PostsFeed() {
 
 	return (
 		<View style={styles.wrapper}>
-			{loading ? (
+			{loading && posts.length === 0 ? (
 				<ActivityIndicator />
 			) : (
 				<FlatList

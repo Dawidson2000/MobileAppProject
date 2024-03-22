@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { IconButton } from '../UI/IconButton';
 import { COLOR } from '../../Styles/colors';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../Store/Slices/usersSlice';
+import { addUser } from '../../Store/Users/usersSlice';
 
 export interface UserCardProps {
 	user: UserSimple;
@@ -18,7 +18,7 @@ export function UserCard(props: UserCardProps) {
 	const dispatch = useDispatch();
 
 	const addUserHandler = () => {
-		dispatch(addUser(user));
+		dispatch(addUser(user.id));
 	};
 
 	return (
@@ -38,9 +38,11 @@ export function UserCard(props: UserCardProps) {
 					<Text>{user.name}</Text>
 					<Text style={styles.username}>@{user.username}</Text>
 				</View>
-				<View style={styles.buttons}>
-					<IconButton iconName='plus' onPress={() => addUserHandler()} />
-				</View>
+				{!user.isAdded && (
+					<View style={styles.buttons}>
+						<IconButton iconName='plus' onPress={() => addUserHandler()} />
+					</View>
+				)}
 			</View>
 		</TouchableHighlight>
 	);

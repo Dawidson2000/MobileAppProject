@@ -6,7 +6,7 @@ import { User } from '../../Models/Users/User';
 import { useRoute } from '@react-navigation/native';
 import { Button } from '../UI/Button';
 import { COLOR } from '../../Styles/colors';
-import { addUser } from '../../Store/Slices/usersSlice';
+import { addUser } from '../../Store/Users/usersSlice';
 import { useDispatch } from 'react-redux';
 
 export function UserDetails() {

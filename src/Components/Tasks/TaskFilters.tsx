@@ -1,9 +1,9 @@
 import { View, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../Store/applicationState';
 import { TaskType } from '../../Models/Tasks/TaskType';
 import { Button } from '../UI/Button';
+import { selectAddedUsers } from '../../Store/Users/selectors';
 
 interface UserSelectProps {
 	onUserChange: (id: string | undefined) => void;
@@ -13,7 +13,7 @@ interface UserSelectProps {
 export function TaskFilters(props: UserSelectProps) {
 	const { onTaskTypeChange, onUserChange } = props;
 
-	const users = useSelector((state: ApplicationState) => state.users.users);
+	const users = useSelector(selectAddedUsers);
 
 	return (
 		<View style={styles.wrapper}>

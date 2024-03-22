@@ -1,12 +1,11 @@
-import React, {  } from 'react';
+import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {
-	View,
-	Text,
-	StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { COLOR } from '../../Styles/colors';
 import { Post } from '../../Models/Posts/Post';
+import { useSelector } from 'react-redux';
+import { ApplicationState } from '../../Store/applicationState';
+import { selectUserById } from '../../Store/Users/selectors';
 
 interface PostProps {
 	post: Post;
@@ -14,6 +13,10 @@ interface PostProps {
 
 export function PostContainer(props: PostProps) {
 	const { post } = props;
+	
+  const user = useSelector((state: ApplicationState) =>
+		selectUserById(state, post.userId)
+	);
 
 	return (
 		<View style={styles.wrapper}>
@@ -26,8 +29,8 @@ export function PostContainer(props: PostProps) {
 					/>
 				</View>
 				<View>
-					<Text>{'user'}</Text>
-					<Text style={styles.username}>@user</Text>
+					<Text>{user?.name}</Text>
+					<Text style={styles.username}>@{user?.username}</Text>
 				</View>
 			</View>
 			<Text style={styles.title}>{post.title}</Text>
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
 		marginVertical: 5,
 	},
 	comments: {
-    marginTop: 5,
+		marginTop: 5,
 		marginLeft: 'auto',
 	},
 });
