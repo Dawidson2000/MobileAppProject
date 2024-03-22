@@ -25,7 +25,7 @@ export function PostDetails() {
 const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
-		paddingVertical: 20,
+		padding: 10,
 		width: '100%',
 	},
 });

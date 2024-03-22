@@ -13,7 +13,7 @@ export default function App() {
 			<KeyboardAvoidingView
 				behavior={'height'}
 				style={styles.container}
-				keyboardVerticalOffset={-64}
+				keyboardVerticalOffset={-54}
 			>
 				<Provider store={store}>
 					<NavigationContainer>

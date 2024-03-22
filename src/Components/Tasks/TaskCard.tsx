@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { COLOR } from '../../Styles/colors';
-import { Post } from '../../Models/Posts/Post';
 import { Task } from '../../Models/Tasks/Task';
 import {
 	GestureHandlerRootView,
 	Swipeable,
 } from 'react-native-gesture-handler';
-import { Button } from '../UI/Button';
 
 interface PostProps {
 	task: Task;
@@ -19,27 +17,27 @@ export function TaskCard(props: PostProps) {
 
 	const [isCompleted, setIsCompleted] = useState(task.completed);
 	const [isSwipeOpen, setIsSwipeOpen] = useState(false);
-	const swipeableRef = useRef<any>(null);
+	const swipeableRef = useRef<Swipeable>(null);
 
 	useEffect(() => {
 		if (isSwipeOpen) {
-			swipeableRef.current.close();
+			swipeableRef.current?.close();
 			setIsSwipeOpen(false);
 		}
 	}, [isSwipeOpen]);
 
 	const renderRightActions = () => {
 		return (
-			<View>
-				<Text>Finish</Text>
+			<View style={styles.swipe}>
+				<MaterialCommunityIcons name={'close'} color={COLOR.red} size={35} />
 			</View>
 		);
 	};
 
 	const renderLeftActions = () => {
 		return (
-			<View>
-				<Text>Open</Text>
+			<View style={styles.swipe}>
+				<MaterialCommunityIcons name={'check'} color={COLOR.green} size={35} />
 			</View>
 		);
 	};
@@ -102,5 +100,10 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		flex: 1,
+	},
+	swipe: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: '100%',
 	},
 });
