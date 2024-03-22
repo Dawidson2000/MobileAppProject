@@ -6,17 +6,24 @@ import { User } from '../../Models/Users/User';
 import { useRoute } from '@react-navigation/native';
 import { Button } from '../UI/Button';
 import { COLOR } from '../../Styles/colors';
-import { addUser } from '../../Store/Users/usersSlice';
-import { useDispatch } from 'react-redux';
+import { subscribeUser, unsubscribeUser } from '../../Store/Users/usersSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { ApplicationState } from '../../Store/applicationState';
+import { selectUserById } from '../../Store/Users/selectors';
+import { IconButton } from '../UI/IconButton';
 
 export function UserDetails() {
+	const route = useRoute<any>();
+	const { id } = route.params;
+
+	const userStore = useSelector((state: ApplicationState) =>
+		selectUserById(state, id)
+	);
+
 	const [user, setUser] = useState<User | undefined>(undefined);
 	const [loading, setLoading] = useState(false);
 
-	const route = useRoute<any>();
 	const dispatch = useDispatch();
-
-	const { id } = route.params;
 
 	useEffect(() => {
 		setLoading(true);
@@ -28,8 +35,11 @@ export function UserDetails() {
 			});
 	}, []);
 
-	const addUserHandler = (user: UserSimple) => {
-		dispatch(addUser(user));
+	const subscribeUserHandler = (user: UserSimple) => {
+		dispatch(subscribeUser(user.id));
+	};
+	const unsubscribeUserHandler = (user: UserSimple) => {
+		dispatch(unsubscribeUser(user.id));
 	};
 
 	return (
@@ -43,11 +53,21 @@ export function UserDetails() {
 							size={200}
 						/>
 					</View>
-					<Button
-						title='Add user'
-						style={styles.button}
-						onPress={() => addUserHandler(user)}
-					/>
+					<View style={styles.buttons}>
+						<Button
+							title={userStore?.isSubscribed ? 'Subscribed' : 'Subscribe user'}
+							style={styles.button}
+							onPress={() => subscribeUserHandler(user)}
+							disabled={userStore?.isSubscribed}
+						/>
+						{userStore?.isSubscribed && (
+							<IconButton
+								iconName='close'
+								size={40}
+								onPress={() => unsubscribeUserHandler(user)}
+							/>
+						)}
+					</View>
 					<View style={styles.userBasicData}>
 						<Text style={styles.name}>{user.name}</Text>
 						<Text style={styles.username}>@{user.username}</Text>
@@ -91,7 +111,13 @@ const styles = StyleSheet.create({
 		fontWeight: '200',
 		fontSize: 15,
 	},
+	buttons: {
+		flexDirection: 'row',
+		gap: 15,
+		alignItems: 'center',
+    height: 40,
+	},
 	button: {
-		width: '100%',
+		flex: 1,
 	},
 });

@@ -30,7 +30,7 @@ export function UsersList() {
 							id: user.id,
 							name: user.name,
 							username: user.username,
-							isAdded: false,
+							isSubscribed: false,
 						} as UserSimple)
 				);
 

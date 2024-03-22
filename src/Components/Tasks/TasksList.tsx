@@ -46,6 +46,7 @@ export function TasksList() {
 		<View style={styles.wrapper}>
 			<TaskFilters
 				onUserChange={(id) => setSelectedUserId(id)}
+        selectedTaskType={selectedTaskType}
 				onTaskTypeChange={(type: TaskType) => setSelectedTaskType(type)}
 			/>
 			{loading ? (

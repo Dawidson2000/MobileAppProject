@@ -11,6 +11,6 @@ export const selectUserById = createSelector(
 	}
 );
 
-export const selectAddedUsers = createSelector([selectUsers], (users) =>
-	users.filter((user) => user.isAdded)
+export const selectSubscribedUsers = createSelector([selectUsers], (users) =>
+	users.filter((user) => user.isSubscribed)
 );

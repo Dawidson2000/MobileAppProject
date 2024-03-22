@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Animated } from 'react-native';
 import { COLOR } from '../../Styles/colors';
 import { Post } from '../../Models/Posts/Post';
 import { Task } from '../../Models/Tasks/Task';
+import {
+	GestureHandlerRootView,
+	Swipeable,
+} from 'react-native-gesture-handler';
+import { Button } from '../UI/Button';
 
 interface PostProps {
 	task: Task;
@@ -12,24 +17,63 @@ interface PostProps {
 export function TaskCard(props: PostProps) {
 	const { task } = props;
 
+	const [isCompleted, setIsCompleted] = useState(task.completed);
+	const [isSwipeOpen, setIsSwipeOpen] = useState(false);
+	const swipeableRef = useRef<any>(null);
+
+	useEffect(() => {
+		if (isSwipeOpen) {
+			swipeableRef.current.close();
+			setIsSwipeOpen(false);
+		}
+	}, [isSwipeOpen]);
+
+	const renderRightActions = () => {
+		return (
+			<View>
+				<Text>Finish</Text>
+			</View>
+		);
+	};
+
+	const renderLeftActions = () => {
+		return (
+			<View>
+				<Text>Open</Text>
+			</View>
+		);
+	};
+
 	return (
-		<View style={styles.wrapper}>
-			<View
-				style={[
-					styles.status,
-					task.completed ? styles.completed : styles.closed,
-				]}
+		<GestureHandlerRootView>
+			<Swipeable
+				renderRightActions={renderRightActions}
+				renderLeftActions={renderLeftActions}
+				ref={swipeableRef}
+				onSwipeableOpen={(direction) => {
+					direction === 'left' ? setIsCompleted(true) : setIsCompleted(false);
+					setIsSwipeOpen(true);
+				}}
 			>
-				<MaterialCommunityIcons
-					name={task.completed ? 'check' : 'close'}
-					color={task.completed ? COLOR.green : COLOR.red}
-					size={35}
-				/>
-			</View>
-			<View style={styles.content}>
-				<Text>{task.title}</Text>
-			</View>
-		</View>
+				<View style={styles.wrapper}>
+					<View
+						style={[
+							styles.status,
+							isCompleted ? styles.completed : styles.closed,
+						]}
+					>
+						<MaterialCommunityIcons
+							name={isCompleted ? 'check' : 'close'}
+							color={isCompleted ? COLOR.green : COLOR.red}
+							size={35}
+						/>
+					</View>
+					<View style={styles.content}>
+						<Text>{task.title}</Text>
+					</View>
+				</View>
+			</Swipeable>
+		</GestureHandlerRootView>
 	);
 }
 

@@ -13,9 +13,14 @@ export const usersSlice = createSlice({
 	name: 'users',
 	initialState: inititalState,
 	reducers: {
-		addUser: (state, action: PayloadAction<number>) => {
+		subscribeUser: (state, action: PayloadAction<number>) => {
 			state.users = state.users.map((user) =>
-				user.id === action.payload ? { ...user, isAdded: true } : user
+				user.id === action.payload ? { ...user, isSubscribed: true } : user
+			);
+		},
+		unsubscribeUser: (state, action: PayloadAction<number>) => {
+			state.users = state.users.map((user) =>
+				user.id === action.payload ? { ...user, isSubscribed: false } : user
 			);
 		},
 		saveUsers: (state, action: PayloadAction<UserSimple[]>) => {
@@ -24,6 +29,6 @@ export const usersSlice = createSlice({
 	},
 });
 
-export const { addUser, saveUsers } = usersSlice.actions;
+export const { subscribeUser, unsubscribeUser, saveUsers } = usersSlice.actions;
 
 export default usersSlice.reducer;

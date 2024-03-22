@@ -10,11 +10,12 @@ import { COLOR } from '../../Styles/colors';
 export interface IconButtonProps {
 	iconName: 'plus' | 'send' | 'check' | 'close' | 'refresh';
 	disabled?: boolean;
+  size?: number;
 	onPress: ((event: GestureResponderEvent) => void) | undefined;
 }
 
 export function IconButton(props: IconButtonProps) {
-	const { iconName, disabled, onPress } = props;
+	const { iconName, disabled, size, onPress } = props;
 
 	return (
 		<TouchableOpacity
@@ -25,7 +26,7 @@ export function IconButton(props: IconButtonProps) {
 			<MaterialCommunityIcons
 				name={iconName}
 				color={COLOR.mainAccent}
-				size={30}
+				size={size ?? 30}
 			/>
 		</TouchableOpacity>
 	);

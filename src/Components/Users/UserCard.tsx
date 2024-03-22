@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { IconButton } from '../UI/IconButton';
 import { COLOR } from '../../Styles/colors';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../Store/Users/usersSlice';
+import { subscribeUser } from '../../Store/Users/usersSlice';
 
 export interface UserCardProps {
 	user: UserSimple;
@@ -17,8 +17,8 @@ export function UserCard(props: UserCardProps) {
 	const navigation = useNavigation<any>();
 	const dispatch = useDispatch();
 
-	const addUserHandler = () => {
-		dispatch(addUser(user.id));
+	const subscribeUserHandler = () => {
+		dispatch(subscribeUser(user.id));
 	};
 
 	return (
@@ -38,9 +38,9 @@ export function UserCard(props: UserCardProps) {
 					<Text>{user.name}</Text>
 					<Text style={styles.username}>@{user.username}</Text>
 				</View>
-				{!user.isAdded && (
+				{!user.isSubscribed && (
 					<View style={styles.buttons}>
-						<IconButton iconName='plus' onPress={() => addUserHandler()} />
+						<IconButton iconName='plus' onPress={() => subscribeUserHandler()} />
 					</View>
 				)}
 			</View>

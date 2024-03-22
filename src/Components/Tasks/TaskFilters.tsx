@@ -3,17 +3,18 @@ import RNPickerSelect from 'react-native-picker-select';
 import { useSelector } from 'react-redux';
 import { TaskType } from '../../Models/Tasks/TaskType';
 import { Button } from '../UI/Button';
-import { selectAddedUsers } from '../../Store/Users/selectors';
+import { selectSubscribedUsers } from '../../Store/Users/selectors';
 
 interface UserSelectProps {
+	selectedTaskType: TaskType;
 	onUserChange: (id: string | undefined) => void;
 	onTaskTypeChange: (type: TaskType) => void;
 }
 
 export function TaskFilters(props: UserSelectProps) {
-	const { onTaskTypeChange, onUserChange } = props;
+	const { onTaskTypeChange, onUserChange, selectedTaskType } = props;
 
-	const users = useSelector(selectAddedUsers);
+	const users = useSelector(selectSubscribedUsers);
 
 	return (
 		<View style={styles.wrapper}>
@@ -27,12 +28,18 @@ export function TaskFilters(props: UserSelectProps) {
 				<Button
 					title='Completed'
 					onPress={() => onTaskTypeChange(TaskType.OnlyCompleted)}
+					disabled={selectedTaskType === TaskType.OnlyCompleted}
 				/>
 				<Button
 					title='Closed'
 					onPress={() => onTaskTypeChange(TaskType.OnlyClosed)}
+					disabled={selectedTaskType === TaskType.OnlyClosed}
 				/>
-				<Button title='All' onPress={() => onTaskTypeChange(TaskType.All)} />
+				<Button
+					title='All'
+					onPress={() => onTaskTypeChange(TaskType.All)}
+					disabled={selectedTaskType === TaskType.All}
+				/>
 			</View>
 		</View>
 	);

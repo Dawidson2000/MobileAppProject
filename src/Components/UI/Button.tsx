@@ -9,16 +9,21 @@ import {
 import { COLOR } from '../../Styles/colors';
 
 export interface IconButtonProps {
-	style?: StyleProp<TextStyle>;
 	title: string;
+	disabled?: boolean;
+	style?: StyleProp<TextStyle>;
 	onPress: () => void;
 }
 
 export function Button(props: IconButtonProps) {
-	const { title, style, onPress } = props;
+	const { title, style, disabled, onPress } = props;
 
 	return (
-		<TouchableOpacity onPress={onPress} style={[styles.button, style]}>
+		<TouchableOpacity
+			onPress={onPress}
+			style={[styles.button, style, disabled && styles.disabled]}
+      disabled={disabled}
+		>
 			<Text style={styles.title}>{title}</Text>
 		</TouchableOpacity>
 	);
@@ -26,7 +31,7 @@ export function Button(props: IconButtonProps) {
 
 const styles = StyleSheet.create({
 	button: {
-    alignItems: 'center',
+		alignItems: 'center',
 		backgroundColor: COLOR.mainAccent,
 		paddingVertical: 10,
 		paddingHorizontal: 25,
@@ -35,6 +40,9 @@ const styles = StyleSheet.create({
 	title: {
 		color: '#fff',
 		fontWeight: 'bold',
-    fontSize: 15
+		fontSize: 15,
+	},
+	disabled: {
+		opacity: 0.3,
 	},
 });
