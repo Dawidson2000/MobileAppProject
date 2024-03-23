@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
 	title: {
 		color: '#fff',
 		fontWeight: 'bold',
-		fontSize: 15,
 	},
 	disabled: {
 		opacity: 0.3,

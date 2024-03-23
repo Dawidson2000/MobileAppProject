@@ -1,4 +1,4 @@
-import { UserDetails } from '../Components/Users/UserDetails';
+import { UserDetails } from '../Components/Users/UserDetails/UserDetails';
 import { UsersList } from '../Components/Users/UsersList';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

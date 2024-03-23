@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { UserSimple } from '../../Models/Users/UserSimple';
+import {
+	View,
+	Text,
+	StyleSheet,
+	ActivityIndicator,
+	ScrollView,
+} from 'react-native';
+import { UserSimple } from '../../../Models/Users/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { User } from '../../Models/Users/User';
+import { User } from '../../../Models/Users/User';
 import { useRoute } from '@react-navigation/native';
-import { Button } from '../UI/Button';
-import { COLOR } from '../../Styles/colors';
-import { subscribeUser, unsubscribeUser } from '../../Store/Users/usersSlice';
+import { Button } from '../../UI/Button';
+import { COLOR } from '../../../Styles/colors';
+import {
+	subscribeUser,
+	unsubscribeUser,
+} from '../../../Store/Users/usersSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../Store/applicationState';
-import { selectUserById } from '../../Store/Users/selectors';
-import { IconButton } from '../UI/IconButton';
+import { ApplicationState } from '../../../Store/applicationState';
+import { selectUserById } from '../../../Store/Users/selectors';
+import { IconButton } from '../../UI/IconButton';
+import { Albums } from './Albums';
 
 export function UserDetails() {
 	const route = useRoute<any>();
@@ -38,6 +48,7 @@ export function UserDetails() {
 	const subscribeUserHandler = (user: UserSimple) => {
 		dispatch(subscribeUser(user.id));
 	};
+
 	const unsubscribeUserHandler = (user: UserSimple) => {
 		dispatch(unsubscribeUser(user.id));
 	};
@@ -46,32 +57,37 @@ export function UserDetails() {
 		<View style={styles.wrapper}>
 			{user && !loading ? (
 				<>
-					<View style={styles.userPhoto}>
-						<MaterialCommunityIcons
-							name='face-man-profile'
-							color={COLOR.mainAccent}
-							size={200}
-						/>
-					</View>
-					<View style={styles.buttons}>
-						<Button
-							title={userStore?.isSubscribed ? 'Subscribed' : 'Subscribe user'}
-							style={styles.button}
-							onPress={() => subscribeUserHandler(user)}
-							disabled={userStore?.isSubscribed}
-						/>
-						{userStore?.isSubscribed && (
-							<IconButton
-								iconName='close'
-								size={40}
-								onPress={() => unsubscribeUserHandler(user)}
+					<ScrollView contentContainerStyle={styles.scrollView}>
+						<View style={styles.userPhoto}>
+							<MaterialCommunityIcons
+								name='face-man-profile'
+								color={COLOR.mainAccent}
+								size={200}
 							/>
-						)}
-					</View>
-					<View style={styles.userBasicData}>
-						<Text style={styles.name}>{user.name}</Text>
-						<Text style={styles.username}>@{user.username}</Text>
-					</View>
+						</View>
+						<View style={styles.buttons}>
+							<Button
+								title={
+									userStore?.isSubscribed ? 'Subscribed' : 'Subscribe user'
+								}
+								style={styles.button}
+								onPress={() => subscribeUserHandler(user)}
+								disabled={userStore?.isSubscribed}
+							/>
+							{userStore?.isSubscribed && (
+								<IconButton
+									iconName='close'
+									size={40}
+									onPress={() => unsubscribeUserHandler(user)}
+								/>
+							)}
+						</View>
+						<View style={styles.userBasicData}>
+							<Text style={styles.name}>{user.name}</Text>
+							<Text style={styles.username}>@{user.username}</Text>
+						</View>
+						<Albums userId={user.id} />
+					</ScrollView>
 				</>
 			) : (
 				<ActivityIndicator color={COLOR.mainAccent} />
@@ -89,6 +105,9 @@ const styles = StyleSheet.create({
 		width: '100%',
 		gap: 15,
 	},
+	scrollView: {
+		gap: 15,
+	},
 	userPhoto: {
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -101,21 +120,21 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		justifyContent: 'flex-start',
 		width: '100%',
-		padding: 20,
+		padding: 10,
 		borderRadius: 10,
 	},
 	name: {
-		fontSize: 18,
+		fontSize: 20,
 	},
 	username: {
 		fontWeight: '200',
-		fontSize: 15,
+		fontSize: 20,
 	},
 	buttons: {
 		flexDirection: 'row',
 		gap: 15,
 		alignItems: 'center',
-    height: 40,
+		height: 40,
 	},
 	button: {
 		flex: 1,
