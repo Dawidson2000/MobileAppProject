@@ -48,6 +48,7 @@ export function Albums(props: AlbumsProps) {
 				) : (
 					albums.map((album) => (
 						<TouchableWithoutFeedback
+							key={album.id}
 							onPress={() =>
 								setPhotosModal({ isOpen: true, albumId: album.id })
 							}

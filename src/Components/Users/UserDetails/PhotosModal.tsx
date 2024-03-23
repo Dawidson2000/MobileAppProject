@@ -9,6 +9,7 @@ import {
 import { COLOR } from '../../../Styles/colors';
 import { Photo } from '../../../Models/Users/Photo';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { PhotosGallery } from './PhotosGallery';
 
 interface PhotosModalProps {
 	isOpen: boolean;
@@ -45,13 +46,15 @@ export function PhotosModal(props: PhotosModalProps) {
 				}}
 			>
 				<Pressable
-					onPress={(event) =>
-						event.target == event.currentTarget && onClose()
-					}
+					onPress={(event) => event.target == event.currentTarget && onClose()}
 					style={styles.body}
 				>
 					<View style={styles.content}>
-						{loading && <ActivityIndicator color={COLOR.mainAccent} />}
+						{loading ? (
+							<ActivityIndicator color={COLOR.mainAccent} />
+						) : (
+							<PhotosGallery photos={photos} />
+						)}
 					</View>
 				</Pressable>
 			</Modal>
