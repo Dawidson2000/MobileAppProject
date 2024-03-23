@@ -10,12 +10,12 @@ import {
 
 interface PostProps {
 	task: Task;
+	onChangeStatus: (status: Partial<Task>) => void;
 }
 
 export function TaskCard(props: PostProps) {
-	const { task } = props;
+	const { task, onChangeStatus } = props;
 
-	const [isCompleted, setIsCompleted] = useState(task.completed);
 	const [isSwipeOpen, setIsSwipeOpen] = useState(false);
 	const swipeableRef = useRef<Swipeable>(null);
 
@@ -42,27 +42,33 @@ export function TaskCard(props: PostProps) {
 		);
 	};
 
+	const swipeableHandler = (direction: 'left' | 'right') => {
+		onChangeStatus(
+			direction === 'left'
+				? { id: task.id, completed: true }
+				: { id: task.id, completed: false }
+		);
+		setIsSwipeOpen(true);
+	};
+
 	return (
 		<GestureHandlerRootView>
 			<Swipeable
 				renderRightActions={renderRightActions}
 				renderLeftActions={renderLeftActions}
 				ref={swipeableRef}
-				onSwipeableOpen={(direction) => {
-					direction === 'left' ? setIsCompleted(true) : setIsCompleted(false);
-					setIsSwipeOpen(true);
-				}}
+				onSwipeableOpen={swipeableHandler}
 			>
 				<View style={styles.wrapper}>
 					<View
 						style={[
 							styles.status,
-							isCompleted ? styles.completed : styles.closed,
+							task.completed ? styles.completed : styles.closed,
 						]}
 					>
 						<MaterialCommunityIcons
-							name={isCompleted ? 'check' : 'close'}
-							color={isCompleted ? COLOR.green : COLOR.red}
+							name={task.completed ? 'check' : 'close'}
+							color={task.completed ? COLOR.green : COLOR.red}
 							size={35}
 						/>
 					</View>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { Task } from '../../Models/Tasks/Task';
 import { TaskCard } from './TaskCard';
@@ -8,19 +8,14 @@ import { TaskType } from '../../Models/Tasks/TaskType';
 export function TasksList() {
 	const [loading, setLoading] = useState(false);
 	const [tasks, setTasks] = useState<Task[]>([]);
-	const [selectedUserId, setSelectedUserId] = useState<string | undefined>(
-		undefined
-	);
 	const [selectedTaskType, setSelectedTaskType] = useState<TaskType>(
 		TaskType.All
 	);
 
-	useEffect(() => {
-		if (selectedUserId) {
+	const fetchTasks = (id: number | undefined) => {
+		if (id) {
 			setLoading(true);
-			fetch(
-				`https://jsonplaceholder.typicode.com/todos?userId=${selectedUserId}`
-			)
+			fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
 				.then((response) => response.json())
 				.then((data) => {
 					setTasks(data);
@@ -29,9 +24,9 @@ export function TasksList() {
 		} else {
 			setTasks([]);
 		}
-	}, [selectedUserId]);
+	};
 
-	const filteredTasks = () => {
+	const filteredTasks = useCallback(() => {
 		switch (selectedTaskType) {
 			case TaskType.All:
 				return tasks;
@@ -40,13 +35,21 @@ export function TasksList() {
 			case TaskType.OnlyCompleted:
 				return tasks.filter((task) => task.completed === true);
 		}
+	}, [tasks, selectedTaskType]);
+
+	const changeTaskHandler = (change: Partial<Task>) => {
+		setTasks((prevTasks) =>
+			prevTasks.map((task) => {
+				return task.id === change.id ? { ...task, ...change } : task;
+			})
+		);
 	};
 
 	return (
 		<View style={styles.wrapper}>
 			<TaskFilters
-				onUserChange={(id) => setSelectedUserId(id)}
-        selectedTaskType={selectedTaskType}
+				onUserChange={fetchTasks}
+				selectedTaskType={selectedTaskType}
 				onTaskTypeChange={(type: TaskType) => setSelectedTaskType(type)}
 			/>
 			{loading ? (
@@ -54,7 +57,9 @@ export function TasksList() {
 			) : (
 				<FlatList
 					data={filteredTasks()}
-					renderItem={({ item }) => <TaskCard task={item} />}
+					renderItem={({ item }) => (
+						<TaskCard task={item} onChangeStatus={changeTaskHandler} />
+					)}
 					keyExtractor={(item) => item.id.toString()}
 					contentContainerStyle={styles.listContent}
 					style={styles.list}

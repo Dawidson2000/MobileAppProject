@@ -7,7 +7,7 @@ import { selectSubscribedUsers } from '../../Store/Users/selectors';
 
 interface UserSelectProps {
 	selectedTaskType: TaskType;
-	onUserChange: (id: string | undefined) => void;
+	onUserChange: (id: number | undefined) => void;
 	onTaskTypeChange: (type: TaskType) => void;
 }
 
@@ -22,7 +22,7 @@ export function TaskFilters(props: UserSelectProps) {
 				onValueChange={(value) => onUserChange(value)}
 				items={users.map((user) => ({ label: user.name, value: user.id }))}
 				style={pickerSelectStyles}
-				useNativeAndroidPickerStyle={false}
+				useNativeAndroidPickerStyle={false}    
 			/>
 			<View style={styles.buttons}>
 				<Button
