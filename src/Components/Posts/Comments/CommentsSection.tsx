@@ -32,7 +32,7 @@ export function CommentsSection(props: CommentsSectionProps) {
 			email: 'yourEmail@gmail.com',
 			body: value,
 			name: '',
-			id: comments.length + 2,
+			id: new Date().getTime(),
 		};
 
 		setComments((prevComments) => {
