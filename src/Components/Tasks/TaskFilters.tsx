@@ -36,7 +36,7 @@ export function TaskFilters(props: UserSelectProps) {
 				buttonTextAfterSelection={(user: UserSimple) => user.name}
 				buttonStyle={[styles.input, users.length === 0 && styles.disabled]}
 				dropdownStyle={styles.dropdown}
-				defaultButtonText={users.length === 0 ? 'No users' : 'Select user'}
+				defaultButtonText={users.length === 0 ? 'No users subcribed' : 'Select user'}
 				ref={inputRef}
 				disabled={users.length === 0}
 			/>
