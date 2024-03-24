@@ -1,10 +1,12 @@
 import { View, StyleSheet } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
 import { useSelector } from 'react-redux';
 import { TaskType } from '../../Models/Tasks/TaskType';
 import { Button } from '../UI/Button';
 import { selectSubscribedUsers } from '../../Store/Users/selectors';
 import { COLOR } from '../../Styles/colors';
+import SelectDropdown from 'react-native-select-dropdown';
+import { UserSimple } from '../../Models/Users/UserSimple';
+import { useEffect, useRef } from 'react';
 
 interface UserSelectProps {
 	selectedTaskType: TaskType;
@@ -14,29 +16,41 @@ interface UserSelectProps {
 
 export function TaskFilters(props: UserSelectProps) {
 	const { onTaskTypeChange, onUserChange, selectedTaskType } = props;
+	const inputRef = useRef<SelectDropdown>(null);
 
 	const users = useSelector(selectSubscribedUsers);
 
+	useEffect(() => {
+		inputRef.current?.reset();
+		onUserChange(undefined);
+	}, [users.length]);
+
 	return (
 		<View style={styles.wrapper}>
-			<RNPickerSelect
-				onValueChange={(value) => onUserChange(value)}
-				items={users.map((user) => ({ label: user.name, value: user.id }))}
-				style={pickerSelectStyles}
-				useNativeAndroidPickerStyle={false}    
+			<SelectDropdown
+				data={users}
+				onSelect={(user: UserSimple) => {
+					onUserChange(user.id);
+				}}
+				rowTextForSelection={(user: UserSimple) => user.name}
+				buttonTextAfterSelection={(user: UserSimple) => user.name}
+				buttonStyle={styles.input}
+				dropdownStyle={styles.dropdown}
+				defaultButtonText='Select user'
+				ref={inputRef}
 			/>
 			<View style={styles.buttons}>
 				<Button
 					title='Completed'
 					onPress={() => onTaskTypeChange(TaskType.OnlyCompleted)}
 					disabled={selectedTaskType === TaskType.OnlyCompleted}
-          style={{backgroundColor: COLOR.completed}}
+					style={{ backgroundColor: COLOR.completed }}
 				/>
 				<Button
 					title='In progress'
 					onPress={() => onTaskTypeChange(TaskType.OnlyClosed)}
 					disabled={selectedTaskType === TaskType.OnlyClosed}
-          style={{backgroundColor: COLOR.inProgress}}
+					style={{ backgroundColor: COLOR.inProgress }}
 				/>
 				<Button
 					title='All'
@@ -48,26 +62,15 @@ export function TaskFilters(props: UserSelectProps) {
 	);
 }
 
-const pickerSelectStyles = StyleSheet.create({
-	inputAndroid: {
+const styles = StyleSheet.create({
+	input: {
 		backgroundColor: '#fff',
 		borderRadius: 10,
 		height: 50,
 		paddingHorizontal: 10,
 		width: '100%',
 	},
-	inputAndroidContainer: {
-		minWidth: '100%',
-	},
-	inputIOS: {
-		backgroundColor: '#fff',
-		borderRadius: 10,
-		height: 50,
-		paddingHorizontal: 10,
-	},
-});
-
-const styles = StyleSheet.create({
+	dropdown: { borderRadius: 10 },
 	wrapper: {
 		flexDirection: 'column',
 		alignItems: 'center',

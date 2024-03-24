@@ -48,7 +48,7 @@ export function TasksList() {
 
 	const listEmptyComponent = (
 		<View style={styles.emptyComponent}>
-			<Text>You are not subscribed to any user</Text>
+			<Text>No user selected</Text>
 		</View>
 	);
 
