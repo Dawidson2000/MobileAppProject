@@ -8,9 +8,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLOR } from '../../Styles/colors';
 
 export interface IconButtonProps {
-	iconName: 'plus' | 'send' | 'check' | 'close' | 'refresh';
+	iconName:
+		| 'plus'
+		| 'send'
+		| 'check'
+		| 'close'
+		| 'refresh'
+		| 'bell-outline'
+		| 'bell-off-outline';
 	disabled?: boolean;
-  size?: number;
+	size?: number;
 	onPress: ((event: GestureResponderEvent) => void) | undefined;
 }
 

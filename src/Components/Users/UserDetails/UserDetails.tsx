@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	ActivityIndicator,
-	ScrollView,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { UserSimple } from '../../../Models/Users/UserSimple';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { User } from '../../../Models/Users/User';
@@ -21,9 +15,12 @@ import { ApplicationState } from '../../../Store/applicationState';
 import { selectUserById } from '../../../Store/Users/selectors';
 import { IconButton } from '../../UI/IconButton';
 import { Albums } from './Albums';
+import { UserInfo } from './UserInfo';
+import { Loader } from '../../UI/Loader';
+import { UserDetailsRouteProp } from '../../../Models/Navigation/types';
 
 export function UserDetails() {
-	const route = useRoute<any>();
+	const route = useRoute<UserDetailsRouteProp>();
 	const { id } = route.params;
 
 	const userStore = useSelector((state: ApplicationState) =>
@@ -65,6 +62,10 @@ export function UserDetails() {
 								size={200}
 							/>
 						</View>
+						<View style={styles.userBasicData}>
+							<Text style={styles.name}>{user.name}</Text>
+							<Text style={styles.username}>@{user.username}</Text>
+						</View>
 						<View style={styles.buttons}>
 							<Button
 								title={
@@ -76,21 +77,18 @@ export function UserDetails() {
 							/>
 							{userStore?.isSubscribed && (
 								<IconButton
-									iconName='close'
-									size={40}
+									iconName='bell-off-outline'
+									size={30}
 									onPress={() => unsubscribeUserHandler(user)}
 								/>
 							)}
 						</View>
-						<View style={styles.userBasicData}>
-							<Text style={styles.name}>{user.name}</Text>
-							<Text style={styles.username}>@{user.username}</Text>
-						</View>
 						<Albums userId={user.id} />
+						<UserInfo user={user} />
 					</ScrollView>
 				</>
 			) : (
-				<ActivityIndicator color={COLOR.mainAccent} />
+				<Loader />
 			)}
 		</View>
 	);
@@ -99,11 +97,10 @@ export function UserDetails() {
 const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
-		justifyContent: 'flex-start',
+		justifyContent: 'center',
 		alignItems: 'center',
 		padding: 10,
 		width: '100%',
-		gap: 15,
 	},
 	scrollView: {
 		gap: 15,

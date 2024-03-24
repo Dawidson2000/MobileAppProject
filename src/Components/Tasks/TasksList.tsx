@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { useCallback, useState } from 'react';
+import { View, FlatList, StyleSheet, Text } from 'react-native';
 import { Task } from '../../Models/Tasks/Task';
 import { TaskCard } from './TaskCard';
 import { TaskFilters } from './TaskFilters';
 import { TaskType } from '../../Models/Tasks/TaskType';
+import { Loader } from '../UI/Loader';
 
 export function TasksList() {
 	const [loading, setLoading] = useState(false);
@@ -45,6 +46,12 @@ export function TasksList() {
 		);
 	};
 
+	const listEmptyComponent = (
+		<View style={styles.emptyComponent}>
+			<Text>You are not subscribed to any user</Text>
+		</View>
+	);
+
 	return (
 		<View style={styles.wrapper}>
 			<TaskFilters
@@ -52,19 +59,22 @@ export function TasksList() {
 				selectedTaskType={selectedTaskType}
 				onTaskTypeChange={(type: TaskType) => setSelectedTaskType(type)}
 			/>
-			{loading ? (
-				<ActivityIndicator />
-			) : (
-				<FlatList
-					data={filteredTasks()}
-					renderItem={({ item }) => (
-						<TaskCard task={item} onChangeStatus={changeTaskHandler} />
-					)}
-					keyExtractor={(item) => item.id.toString()}
-					contentContainerStyle={styles.listContent}
-					style={styles.list}
-				/>
-			)}
+			<View style={styles.tasks}>
+				{loading ? (
+					<Loader />
+				) : (
+					<FlatList
+						data={filteredTasks()}
+						renderItem={({ item }) => (
+							<TaskCard task={item} onChangeStatus={changeTaskHandler} />
+						)}
+						keyExtractor={(item) => item.id.toString()}
+						contentContainerStyle={styles.listContent}
+						style={styles.list}
+						ListEmptyComponent={listEmptyComponent}
+					/>
+				)}
+			</View>
 		</View>
 	);
 }
@@ -82,5 +92,16 @@ const styles = StyleSheet.create({
 	},
 	list: {
 		width: '100%',
+	},
+	emptyComponent: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '100%',
+	},
+	tasks: {
+		justifyContent: 'center',
+		alignItems: 'center',
+    width: '100%',
+    flex: 1,
 	},
 });

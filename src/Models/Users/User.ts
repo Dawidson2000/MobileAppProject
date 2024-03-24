@@ -11,7 +11,7 @@ export type User = UserSimple & {
 type UserAdress = {
 	street: string;
 	city: string;
-	zipCode: string;
+	zipcode: string;
 };
 
 type UserCompany = {

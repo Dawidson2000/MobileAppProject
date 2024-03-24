@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {
-	View,
-	StyleSheet,
-	Text,
-	ActivityIndicator,
-	TouchableWithoutFeedback,
-} from 'react-native';
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 import { Album } from '../../../Models/Users/Album';
-import { COLOR } from '../../../Styles/colors';
 import { PhotosModal } from './PhotosModal';
+import { Loader } from '../../UI/Loader';
 
 interface AlbumsProps {
 	userId: number;
@@ -44,7 +38,7 @@ export function Albums(props: AlbumsProps) {
 			<Text style={styles.header}>Albums</Text>
 			<View style={styles.albums}>
 				{loading ? (
-					<ActivityIndicator color={COLOR.mainAccent} />
+					<Loader />
 				) : (
 					albums.map((album) => (
 						<TouchableWithoutFeedback
@@ -73,10 +67,16 @@ export function Albums(props: AlbumsProps) {
 
 const styles = StyleSheet.create({
 	wrapper: {
-		gap: 10,
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#fff',
+		padding: 10,
+		borderRadius: 10,
 	},
 	header: {
 		fontSize: 20,
+		marginRight: 'auto',
+		marginBottom: 10,
 	},
 	albums: { flexDirection: 'row', gap: 5, flexWrap: 'wrap' },
 	album: {

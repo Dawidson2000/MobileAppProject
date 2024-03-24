@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {
-	View,
-	StyleSheet,
-	ActivityIndicator,
-	Modal,
-	Pressable,
-} from 'react-native';
-import { COLOR } from '../../../Styles/colors';
+import { View, StyleSheet, Modal, Pressable } from 'react-native';
 import { Photo } from '../../../Models/Users/Photo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PhotosGallery } from './PhotosGallery';
+import { Loader } from '../../UI/Loader';
 
 interface PhotosModalProps {
 	isOpen: boolean;
@@ -50,11 +44,7 @@ export function PhotosModal(props: PhotosModalProps) {
 					style={styles.body}
 				>
 					<View style={styles.content}>
-						{loading ? (
-							<ActivityIndicator color={COLOR.mainAccent} />
-						) : (
-							<PhotosGallery photos={photos} />
-						)}
+						{loading ? <Loader /> : <PhotosGallery photos={photos} />}
 					</View>
 				</Pressable>
 			</Modal>

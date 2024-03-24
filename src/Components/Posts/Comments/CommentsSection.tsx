@@ -1,28 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-	View,
-	StyleSheet,
-	ActivityIndicator,
-	FlatList,
-} from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { CommentContainer } from './CommentContainer';
 import { Comment } from '../../../Models/Posts/Comment';
-import { COLOR } from '../../../Styles/colors';
 import { InputBar } from './InputBar';
+import { Loader } from '../../UI/Loader';
 
-export function CommentsSection() {
+interface CommentsSectionProps {
+	postId: number;
+}
+
+export function CommentsSection(props: CommentsSectionProps) {
+	const { postId } = props;
+
 	const [comments, setComments] = useState<Comment[]>([]);
 	const [loading, setLoading] = useState(false);
-
-	const route = useRoute<any>();
-	const { post } = route.params;
 
 	const listRef = useRef<FlatList>(null);
 
 	useEffect(() => {
 		setLoading(true);
-		fetch(`https://jsonplaceholder.typicode.com/comments?postId=${post.id}`)
+		fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
 			.then((response) => response.json())
 			.then((data) => {
 				setComments(data);
@@ -35,7 +32,7 @@ export function CommentsSection() {
 			email: 'yourEmail@gmail.com',
 			body: value,
 			name: '',
-			id: comments.length + 1,
+			id: comments.length + 2,
 		};
 
 		setComments((prevComments) => {
@@ -48,7 +45,7 @@ export function CommentsSection() {
 	return (
 		<View style={styles.wrapper}>
 			{loading ? (
-				<ActivityIndicator color={COLOR.mainAccent} />
+				<Loader />
 			) : (
 				<>
 					<FlatList
@@ -69,9 +66,9 @@ export function CommentsSection() {
 const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
-		justifyContent: 'flex-start',
+		justifyContent: 'center',
 		alignItems: 'center',
-    paddingTop: 10,
+		paddingTop: 10,
 	},
 	listContent: {
 		gap: 15,

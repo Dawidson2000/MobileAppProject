@@ -1,5 +1,5 @@
-import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
-import { COLOR } from '../../../Styles/colors';
+import { View, Text, StyleSheet } from 'react-native';
+import { Loader } from '../../UI/Loader';
 
 interface FooterProps {
 	loading: boolean;
@@ -11,7 +11,7 @@ export function Footer(props: FooterProps) {
 
 	return (
 		<View style={styles.wrapper}>
-			{loading && <ActivityIndicator color={COLOR.mainAccent} />}
+			{loading && <Loader />}
 			{isEnd && <Text>No more posts at the moment</Text>}
 		</View>
 	);

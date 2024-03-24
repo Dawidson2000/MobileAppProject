@@ -1,7 +1,6 @@
 export const COLOR = {
 	mainAccent: '#e91e63',
-	green: 'green',
-	red: 'red',
-	lightGreen: 'lightgreen',
-	lightRed: 'lightcoral',
+	inProgress: '#0c61b2',
+	completed: '#8ea82d',
+	grey: '#ddd',
 };

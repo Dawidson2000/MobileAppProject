@@ -1,17 +1,11 @@
 import { useEffect, useState } from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	FlatList,
-	ActivityIndicator,
-} from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { UserCard } from './UserCard';
 import { UserSimple } from '../../Models/Users/UserSimple';
-import { COLOR } from '../../Styles/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveUsers } from '../../Store/Users/usersSlice';
 import { ApplicationState } from '../../Store/applicationState';
+import { Loader } from '../UI/Loader';
 
 export function UsersList() {
 	const users = useSelector((state: ApplicationState) => state.users.users);
@@ -42,7 +36,7 @@ export function UsersList() {
 	return (
 		<View style={styles.wrapper}>
 			{loading ? (
-				<ActivityIndicator color={COLOR.mainAccent} />
+				<Loader />
 			) : (
 				<FlatList
 					data={users}

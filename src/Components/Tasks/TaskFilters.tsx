@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { TaskType } from '../../Models/Tasks/TaskType';
 import { Button } from '../UI/Button';
 import { selectSubscribedUsers } from '../../Store/Users/selectors';
+import { COLOR } from '../../Styles/colors';
 
 interface UserSelectProps {
 	selectedTaskType: TaskType;
@@ -29,11 +30,13 @@ export function TaskFilters(props: UserSelectProps) {
 					title='Completed'
 					onPress={() => onTaskTypeChange(TaskType.OnlyCompleted)}
 					disabled={selectedTaskType === TaskType.OnlyCompleted}
+          style={{backgroundColor: COLOR.completed}}
 				/>
 				<Button
-					title='Closed'
+					title='In progress'
 					onPress={() => onTaskTypeChange(TaskType.OnlyClosed)}
 					disabled={selectedTaskType === TaskType.OnlyClosed}
+          style={{backgroundColor: COLOR.inProgress}}
 				/>
 				<Button
 					title='All'

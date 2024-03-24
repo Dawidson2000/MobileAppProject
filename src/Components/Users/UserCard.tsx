@@ -14,7 +14,7 @@ export interface UserCardProps {
 
 export function UserCard(props: UserCardProps) {
 	const { user } = props;
-	const navigation = useNavigation<any>();
+	const navigation = useNavigation();
 	const dispatch = useDispatch();
 
 	const subscribeUserHandler = () => {
@@ -38,11 +38,20 @@ export function UserCard(props: UserCardProps) {
 					<Text>{user.name}</Text>
 					<Text style={styles.username}>@{user.username}</Text>
 				</View>
-				{!user.isSubscribed && (
-					<View style={styles.buttons}>
-						<IconButton iconName='plus' onPress={() => subscribeUserHandler()} />
-					</View>
-				)}
+				<View style={styles.buttons}>
+					{user.isSubscribed ? (
+						<MaterialCommunityIcons
+							name='bell-check-outline'
+							color={COLOR.grey}
+							size={30}
+						/>
+					) : (
+						<IconButton
+							iconName='bell-outline'
+							onPress={() => subscribeUserHandler()}
+						/>
+					)}
+				</View>
 			</View>
 		</TouchableHighlight>
 	);

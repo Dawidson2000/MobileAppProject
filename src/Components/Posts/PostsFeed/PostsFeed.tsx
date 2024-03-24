@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
-import {
-	View,
-	FlatList,
-	StyleSheet,
-	ActivityIndicator,
-} from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { PostCard } from './PostCard';
 import { Footer } from './Footer';
 import { Post } from '../../../Models/Posts/Post';
+import { Loader } from '../../UI/Loader';
 
-export function PostsFeed() {	
-  const [loading, setLoading] = useState(false);
+export function PostsFeed() {
+	const [loading, setLoading] = useState(false);
+	const [refresh, setRefresh] = useState(false);
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [page, setPage] = useState(1);
 	const [isEnd, setIsEnd] = useState(false);
@@ -34,18 +31,21 @@ export function PostsFeed() {
 						page === 1 ? posts : [...prevPosts, ...posts]
 					);
 					setLoading(false);
+					setRefresh(false);
 				});
 		}
 	}, [page]);
 
 	const refreshHandler = () => {
+		setIsEnd(false);
+		if (page !== 1) setRefresh(true);
 		setPage(1);
 	};
 
 	return (
 		<View style={styles.wrapper}>
 			{loading && posts.length === 0 ? (
-				<ActivityIndicator />
+				<Loader />
 			) : (
 				<FlatList
 					data={posts}
@@ -57,8 +57,9 @@ export function PostsFeed() {
 					}}
 					ListFooterComponent={<Footer loading={loading} isEnd={isEnd} />}
 					contentContainerStyle={styles.listContent}
-					refreshing={loading}
+					refreshing={refresh}
 					onRefresh={refreshHandler}
+					style={styles.list}
 				/>
 			)}
 		</View>
@@ -75,5 +76,8 @@ const styles = StyleSheet.create({
 	},
 	listContent: {
 		gap: 15,
+	},
+	list: {
+		width: '100%',
 	},
 });

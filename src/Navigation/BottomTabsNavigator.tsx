@@ -12,7 +12,7 @@ export function BottomTabsNavigator() {
 
 	return (
 		<Tab.Navigator
-			initialRouteName='Feed'
+			initialRouteName='Users'
 			screenOptions={{
 				tabBarActiveTintColor: COLOR.mainAccent,
 				headerShown: false,

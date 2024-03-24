@@ -29,7 +29,11 @@ export function TaskCard(props: PostProps) {
 	const renderRightActions = () => {
 		return (
 			<View style={styles.swipe}>
-				<MaterialCommunityIcons name={'close'} color={COLOR.red} size={35} />
+				<MaterialCommunityIcons
+					name={'progress-clock'}
+					color={COLOR.inProgress}
+					size={35}
+				/>
 			</View>
 		);
 	};
@@ -37,7 +41,11 @@ export function TaskCard(props: PostProps) {
 	const renderLeftActions = () => {
 		return (
 			<View style={styles.swipe}>
-				<MaterialCommunityIcons name={'check'} color={COLOR.green} size={35} />
+				<MaterialCommunityIcons
+					name={'progress-check'}
+					color={COLOR.completed}
+					size={35}
+				/>
 			</View>
 		);
 	};
@@ -67,8 +75,8 @@ export function TaskCard(props: PostProps) {
 						]}
 					>
 						<MaterialCommunityIcons
-							name={task.completed ? 'check' : 'close'}
-							color={task.completed ? COLOR.green : COLOR.red}
+							name={task.completed ? 'progress-check' : 'progress-clock'}
+							color={task.completed ? COLOR.completed : COLOR.inProgress}
 							size={35}
 						/>
 					</View>
@@ -99,10 +107,12 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 	},
 	completed: {
-		backgroundColor: COLOR.lightGreen,
+		borderWidth: 3,
+		borderColor: COLOR.completed,
 	},
 	closed: {
-		backgroundColor: COLOR.lightRed,
+		borderWidth: 3,
+		borderColor: COLOR.inProgress,
 	},
 	content: {
 		flex: 1,

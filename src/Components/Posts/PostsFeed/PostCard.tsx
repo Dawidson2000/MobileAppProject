@@ -10,7 +10,7 @@ interface PostProps {
 
 export function PostCard(props: PostProps) {
 	const { post } = props;
-	const navigation = useNavigation<any>();
+	const navigation = useNavigation();
 
 	return (
 		<TouchableHighlight

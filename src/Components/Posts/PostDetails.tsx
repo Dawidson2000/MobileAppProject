@@ -3,9 +3,10 @@ import { View, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-nati
 import { useRoute } from '@react-navigation/native';
 import { CommentsSection } from './Comments/CommentsSection';
 import { PostContainer } from './PostContainer';
+import { PostDetailsRouteProp } from '../../Models/Navigation/types';
 
 export function PostDetails() {
-	const route = useRoute<any>();
+	const route = useRoute<PostDetailsRouteProp>();
 	const { post } = route.params;
 
 	return (
@@ -14,7 +15,7 @@ export function PostDetails() {
 				{post && (
 					<>
 						<PostContainer post={post} />
-						<CommentsSection />
+						<CommentsSection postId={post.id}/>
 					</>
 				)}
 			</TouchableWithoutFeedback>
