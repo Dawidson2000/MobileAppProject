@@ -34,10 +34,11 @@ export function TaskFilters(props: UserSelectProps) {
 				}}
 				rowTextForSelection={(user: UserSimple) => user.name}
 				buttonTextAfterSelection={(user: UserSimple) => user.name}
-				buttonStyle={styles.input}
+				buttonStyle={[styles.input, users.length === 0 && styles.disabled]}
 				dropdownStyle={styles.dropdown}
-				defaultButtonText='Select user'
+				defaultButtonText={users.length === 0 ? 'No users' : 'Select user'}
 				ref={inputRef}
+				disabled={users.length === 0}
 			/>
 			<View style={styles.buttons}>
 				<Button
@@ -69,6 +70,9 @@ const styles = StyleSheet.create({
 		height: 50,
 		paddingHorizontal: 10,
 		width: '100%',
+	},
+	disabled: {
+		opacity: 0.4,
 	},
 	dropdown: { borderRadius: 10 },
 	wrapper: {
